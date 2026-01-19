@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - AeroAPI</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/dashboard.css">
+</head>
+<body>
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="20" cy="20" r="18" stroke="white" stroke-width="2"/>
+                    <path d="M20 10L28 25H12L20 10Z" fill="white"/>
+                </svg>
+                <span>AeroAPI</span>
+            </div>
+            <div class="nav-links">
+                <% if (user.is_admin) { %>
+                    <a href="/admin" class="nav-link">Admin Panel</a>
+                <% } %>
+                <div class="user-info">
+                    <img src="https://cdn.discordapp.com/avatars/<%= user.discord_id %>/<%= user.discord_avatar %>.png" alt="Avatar" class="user-avatar">
+                    <span><%= user.discord_username %></span>
+                </div>
+                <a href="/logout" class="btn-secondary">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Dashboard</h3>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="sidebar-link active" data-tab="api-keys">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 2l-2 2m-7.61 7.61a5.5 5.5 0 1 1-7.778 7.778 5.5 5.5 0 0 1 7.777-7.777zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>
+                    </svg>
+                    API Keys
+                </a>
+            </nav>
+        </aside>
+
+        <main class="dashboard-main">
+            <% if (moderationStatus.isLocked || moderationStatus.isDisabled || moderationStatus.isRatelimited) { %>
+                <div class="moderation-warning animate-slide-down">
+                    <div class="warning-icon">
+                        <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="#ff4444" stroke-width="2">
+                            <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/>
+                            <line x1="12" y1="9" x2="12" y2="13"/>
+                            <line x1="12" y1="17" x2="12.01" y2="17"/>
+                        </svg>
+                    </div>
+                    <h2>Your account has been <%= moderationStatus.actionType %></h2>
+                    <div class="warning-reason">
+                        <strong>Reason:</strong>
+                        <p><%= moderationStatus.reason %></p>
+                    </div>
+                </div>
+            <% } else { %>
+                <div id="api-keys-tab" class="tab-content active">
+                    <div class="tab-header">
+                        <h2>API Key Management</h2>
+                        <button class="btn-primary" onclick="generateApiKey()">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="12" y1="5" x2="12" y2="19"/>
+                                <line x1="5" y1="12" x2="19" y2="12"/>
+                            </svg>
+                            Generate New Key
+                        </button>
+                    </div>
+
+                    <div id="api-keys-container" class="api-keys-grid">
+                        <div class="loading-spinner">Loading...</div>
+                    </div>
+                </div>
+            <% } %>
+        </main>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Generate API Key</h3>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body" id="modal-body">
+                <div class="form-group">
+                    <label for="key-name">Key Name (Optional)</label>
+                    <input type="text" id="key-name" placeholder="My API Key" class="form-input">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" onclick="closeModal()">Cancel</button>
+                <button class="btn-primary" onclick="confirmGenerate()">Generate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const moderationStatus = <%- JSON.stringify(moderationStatus) %>;
+    </script>
+    <script src="/js/dashboard.js"></script>
+</body>
+</html>

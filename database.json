@@ -1,0 +1,17 @@
+{
+  "users": [
+    {
+      "id": "1768796954522rsxlqr83a",
+      "discord_id": "1442901042994876477",
+      "discord_username": ".breachrr",
+      "discord_discriminator": "0",
+      "discord_avatar": "9d983f350f9054d6a0cab799587f842a",
+      "email": "archiveant@proton.me",
+      "is_admin": 0,
+      "created_at": "2026-01-19T04:29:14.522Z",
+      "updated_at": "2026-01-19T04:50:23.633Z"
+    }
+  ],
+  "apiKeys": [],
+  "moderationActions": []
+}
