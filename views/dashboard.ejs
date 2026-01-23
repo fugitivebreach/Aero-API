@@ -49,6 +49,23 @@
                     </svg>
                     API Keys
                 </a>
+                <div class="sidebar-dropdown">
+                    <a href="#" class="sidebar-link" data-dropdown="api-docs">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+                        </svg>
+                        API Documentation
+                        <svg class="dropdown-arrow" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </a>
+                    <div class="dropdown-menu" id="api-docs-menu">
+                        <a href="#" class="dropdown-item" data-tab="api-setrank">Set Rank API</a>
+                        <a href="#" class="dropdown-item" data-tab="api-validate">Validate Key API</a>
+                        <a href="#" class="dropdown-item" data-tab="api-requirements">API Requirements</a>
+                    </div>
+                </div>
             </nav>
         </aside>
 
@@ -83,6 +100,231 @@
 
                     <div id="api-keys-container" class="api-keys-grid">
                         <div class="loading-spinner">Loading...</div>
+                    </div>
+                </div>
+
+                <div id="api-setrank-tab" class="tab-content">
+                    <div class="api-doc-header">
+                        <h2>Set Rank API</h2>
+                        <p class="api-doc-subtitle">Set a user's rank in a Roblox group</p>
+                    </div>
+
+                    <div class="api-doc-section">
+                        <div class="api-endpoint">
+                            <span class="http-method post">POST</span>
+                            <code class="endpoint-url">/api/setrank</code>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Authentication</h3>
+                            <div class="auth-badge">Required</div>
+                            <p>Learn how to get your API Key and use it in your requests!</p>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>URL Parameters</h3>
+                            <p>None required</p>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Request Headers</h3>
+                            <div class="code-block">
+                                <div class="code-header">
+                                    <span>Headers</span>
+                                </div>
+                                <pre><code>api-key: <span class="code-string">"AeroAPI-your-api-key-here"</span>
+Content-Type: <span class="code-string">"application/json"</span></code></pre>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Request Body</h3>
+                            <div class="param-table">
+                                <div class="param-row">
+                                    <div class="param-name">roblox-cookie</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-required">required</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">group-id</div>
+                                    <div class="param-type">number</div>
+                                    <div class="param-required">required</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">rank-id</div>
+                                    <div class="param-type">number</div>
+                                    <div class="param-required">required</div>
+                                </div>
+                                <div class="param-row">
+                                    <div class="param-name">roblox-username</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-required">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Responses</h3>
+                            <div class="response-section">
+                                <div class="response-code success">200 - Success</div>
+                                <div class="code-block">
+                                    <pre><code>{
+  <span class="code-key">"roblox-username"</span>: <span class="code-string">"targetUser"</span>,
+  <span class="code-key">"roblox-id"</span>: <span class="code-number">123456789</span>,
+  <span class="code-key">"roblox-profile"</span>: <span class="code-string">"https://www.roblox.com/users/123456789/profile"</span>,
+  <span class="code-key">"group-id"</span>: <span class="code-number">123456</span>,
+  <span class="code-key">"rank-id"</span>: <span class="code-number">255</span>,
+  <span class="code-key">"returnCode"</span>: <span class="code-number">200</span>
+}</code></pre>
+                                </div>
+                            </div>
+                            <div class="response-section">
+                                <div class="response-code error">400 - Bad Request</div>
+                                <div class="code-block">
+                                    <pre><code>{
+  <span class="code-key">"valid"</span>: <span class="code-boolean">false</span>,
+  <span class="code-key">"message"</span>: <span class="code-string">"The Roblox cookie you input is invalid"</span>
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="api-validate-tab" class="tab-content">
+                    <div class="api-doc-header">
+                        <h2>Validate Key API</h2>
+                        <p class="api-doc-subtitle">Validate an API key and check its status</p>
+                    </div>
+
+                    <div class="api-doc-section">
+                        <div class="api-endpoint">
+                            <span class="http-method get">GET</span>
+                            <code class="endpoint-url">/api/validate-key/:apiKey</code>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Authentication</h3>
+                            <div class="auth-badge public">Public</div>
+                            <p>No authentication required for this endpoint</p>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>URL Parameters</h3>
+                            <div class="param-table">
+                                <div class="param-row">
+                                    <div class="param-name">apiKey</div>
+                                    <div class="param-type">string</div>
+                                    <div class="param-required">required</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Responses</h3>
+                            <div class="response-section">
+                                <div class="response-code success">200 - Valid Key</div>
+                                <div class="code-block">
+                                    <pre><code>{
+  <span class="code-key">"valid"</span>: <span class="code-boolean">true</span>,
+  <span class="code-key">"user"</span>: {
+    <span class="code-key">"discord_username"</span>: <span class="code-string">"username#0000"</span>,
+    <span class="code-key">"discord_id"</span>: <span class="code-string">"123456789012345678"</span>
+  }
+}</code></pre>
+                                </div>
+                            </div>
+                            <div class="response-section">
+                                <div class="response-code error">404 - Invalid Key</div>
+                                <div class="code-block">
+                                    <pre><code>{
+  <span class="code-key">"valid"</span>: <span class="code-boolean">false</span>,
+  <span class="code-key">"message"</span>: <span class="code-string">"The API Key you input no longer exists"</span>
+}</code></pre>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="api-requirements-tab" class="tab-content">
+                    <div class="api-doc-header">
+                        <h2>API Requirements</h2>
+                        <p class="api-doc-subtitle">Technical requirements and specifications</p>
+                    </div>
+
+                    <div class="api-doc-section">
+                        <div class="doc-card">
+                            <h3>Technical Requirements</h3>
+                            <div class="requirements-grid">
+                                <div class="requirement-item">
+                                    <strong>Protocol:</strong>
+                                    <span>HTTPS (TLS 1.2+)</span>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>Content Type:</strong>
+                                    <span>application/json</span>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>Authentication:</strong>
+                                    <span>API Key (Header-based)</span>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>Character Encoding:</strong>
+                                    <span>UTF-8</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>API Key Format</h3>
+                            <div class="code-block">
+                                <pre><code>AeroAPI-[UUID]
+
+<span class="code-comment">// Example:</span>
+AeroAPI-a1b2c3d4-e5f6-7890-abcd-ef1234567890</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Rate Limiting</h3>
+                            <div class="requirements-grid">
+                                <div class="requirement-item">
+                                    <strong>Standard Endpoints:</strong>
+                                    <span>60 requests/minute</span>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>Validation Endpoints:</strong>
+                                    <span>120 requests/minute</span>
+                                </div>
+                                <div class="requirement-item">
+                                    <strong>Key Generation:</strong>
+                                    <span>10 requests/minute</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="doc-card">
+                            <h3>Common Error Messages</h3>
+                            <div class="error-list">
+                                <div class="error-item">
+                                    <code>The API Key you input no longer exists</code>
+                                    <p>Invalid or deleted API key - Generate a new key</p>
+                                </div>
+                                <div class="error-item">
+                                    <code>The API Key you input is ratelimited</code>
+                                    <p>Rate limit exceeded - Wait before retrying</p>
+                                </div>
+                                <div class="error-item">
+                                    <code>The Roblox cookie you input is invalid</code>
+                                    <p>Invalid or expired cookie - Update Roblox cookie</p>
+                                </div>
+                                <div class="error-item">
+                                    <code>You do not have permission to manage this group</code>
+                                    <p>Insufficient permissions - Use account with group permissions</p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             <% } %>

@@ -3,7 +3,8 @@ let currentApiKeys = [];
 document.addEventListener('DOMContentLoaded', () => {
     loadApiKeys();
     
-    const tabs = document.querySelectorAll('.sidebar-link');
+    // Handle regular sidebar links
+    const tabs = document.querySelectorAll('.sidebar-link[data-tab]');
     tabs.forEach(tab => {
         tab.addEventListener('click', (e) => {
             e.preventDefault();
@@ -11,18 +12,62 @@ document.addEventListener('DOMContentLoaded', () => {
             switchTab(tabName);
         });
     });
+    
+    // Handle dropdown toggle
+    const dropdownLinks = document.querySelectorAll('.sidebar-link[data-dropdown]');
+    dropdownLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+            e.preventDefault();
+            const dropdownId = link.dataset.dropdown;
+            toggleDropdown(dropdownId, link);
+        });
+    });
+    
+    // Handle dropdown items
+    const dropdownItems = document.querySelectorAll('.dropdown-item');
+    dropdownItems.forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const tabName = item.dataset.tab;
+            switchTab(tabName);
+            
+            // Update active state for dropdown items
+            document.querySelectorAll('.dropdown-item').forEach(i => i.classList.remove('active'));
+            item.classList.add('active');
+        });
+    });
 });
 
+function toggleDropdown(dropdownId, link) {
+    const menu = document.getElementById(`${dropdownId}-menu`);
+    if (!menu) return;
+    
+    const isOpen = menu.classList.contains('open');
+    
+    // Close all dropdowns
+    document.querySelectorAll('.dropdown-menu').forEach(m => m.classList.remove('open'));
+    document.querySelectorAll('.sidebar-link[data-dropdown]').forEach(l => l.classList.remove('active'));
+    
+    // Toggle current dropdown
+    if (!isOpen) {
+        menu.classList.add('open');
+        link.classList.add('active');
+    }
+}
+
 function switchTab(tabName) {
-    document.querySelectorAll('.sidebar-link').forEach(link => {
+    // Remove active from regular sidebar links
+    document.querySelectorAll('.sidebar-link[data-tab]').forEach(link => {
         link.classList.remove('active');
     });
     
+    // Hide all tab contents
     document.querySelectorAll('.tab-content').forEach(content => {
         content.classList.remove('active');
     });
     
-    const activeLink = document.querySelector(`[data-tab="${tabName}"]`);
+    // Activate the selected tab
+    const activeLink = document.querySelector(`.sidebar-link[data-tab="${tabName}"]`);
     const activeContent = document.getElementById(`${tabName}-tab`);
     
     if (activeLink) activeLink.classList.add('active');
